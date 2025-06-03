@@ -81,12 +81,13 @@ python preprocess.py --data </path/to/embeddings.txt>
 
 #### Training the Model
 
-To train the model, navigate to the `./models` directory.
+Navigate to the `./models` directory.
 
 ```bash
 cd ./models
 ```
 
+To train the model, use the following command.
 ```bash
 python <default_model.py / ir2vec_O0_model.py / ir2vec_O0_model.py>  \
   --train </path/to/train.csv> \
