@@ -16,10 +16,6 @@
 # Run the script:
 # ./generate_ll.sh
 
-CLANG_BIN=${CLANG_BIN:-/usr/lib/llvm-17/bin/clang-17}          # <-- Set clang path
-SRC_ROOT=${SRC_ROOT:-/path/to/source/directories}              # <-- Set source folder path
-OUT_ROOT=${OUT_ROOT:-/path/to/output/ll/files} 
-
 CLANG=/usr/lib/llvm-17/bin/clang-17                         # <-- Update this path
 SRC_DIR=/path/to/source/directory/                          # <-- Update this path
 DES_DIR=/path/to/output/ll/files                            # <-- Update this path
