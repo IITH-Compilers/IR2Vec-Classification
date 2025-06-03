@@ -47,7 +47,7 @@ Run `get_embeddings.py` to convert the `.ll` files into embedding vectors.
 **Modify the following variables in the script according to your requirements**
 
 ```python
-input_folder = "/path/to/your/input/folder" # Folder containing .ll files
+input_folder = "/path/to/your/input/folder"
 output_txt_path = "/path/to/output/embeddings.txt"
 encoding_type = "fa"        # Encoding type (fa, sym, default: "fa")
 level = "p"                 # Embedding level ("p" (program), "f" (function), default: "p")
