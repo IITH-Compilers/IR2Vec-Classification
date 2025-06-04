@@ -8,8 +8,6 @@ A pipeline for source code classification using LLVM IR and IR2Vec-based embeddi
 - **Python 3.6+**
 - Required Python packages (install via `env.yml`)
 
-## Step-by-Step Guide
-
 ## Environment Setup
 
 Before starting, create a conda environment and install dependencies using the provided `env.yml` file.
@@ -19,6 +17,35 @@ Before starting, create a conda environment and install dependencies using the p
 conda env create -f env.yml
 conda activate ir2vec-env
 ```
+
+## Pre-generated Embeddings for POJ-104
+
+We provide preprocessed train, test, and validation datasets for the POJ-104 benchmark (LLVM 17) in the `embeddings` directory.
+
+```bash
+IR2Vec-Classification/embeddings$ ls
+test.tar.zst  train.tar.zst  val.tar.zst
+```
+
+* These `.csv` files are already formatted for classification.
+* The dataset contains **98 classes** (we skipped folders having fewer than 200 .ll files).
+* You can extract the `.tar.zst` files using
+
+```bash
+tar -I zstd -xf test.tar.zst
+tar -I zstd -xf train.tar.zst
+tar -I zstd -xf val.tar.zst
+```
+
+Once extracted, activate the `ir2vec-env` environment:
+
+```bash
+conda activate ir2vec-env
+```
+
+Then, you're ready to directly **start training** the model.
+
+## Step-by-Step Guide (If you want to recreate the pipeline yourself)
 
 ### **Step 1: Generate `.ll` Files from Source Code**
 
