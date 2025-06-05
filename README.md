@@ -106,7 +106,7 @@ python preprocess.py --data </path/to/embeddings.txt>
 
 ### **Step 4: Train and Test the Classifier**
 
-#### Training the Model
+#### Training the model
 
 Navigate to the `./models` directory.
 
@@ -117,11 +117,11 @@ cd ./models
 To train the model, use the following command.
 ```bash
 python <default_model.py / ir2vec_O0_model.py / ir2vec_O0_model.py>  \
-  --train </path/to/train.csv> \
-  --val </path/to/val.csv> \
-  --test </path/to/test.csv> \
-  --epochs <num_epochs> \
-  --batch_size <batch_size>
+  --train /path/to/train.csv \
+  --val /path/to/val.csv \
+  --test /path/to/test.csv \
+  --epochs num_epochs \
+  --batch_size batch_size
 ```
 
 * `--train`: Path to training CSV.
@@ -130,18 +130,57 @@ python <default_model.py / ir2vec_O0_model.py / ir2vec_O0_model.py>  \
 * `--epochs`: Number of training epochs (default is 100).
 * `--batch_size`: Size of the batch for training (default is 32).
 
-#### Testing the Model
+#### Testing the model
 
 To test the model, use the following command.
 
 ```bash
-python IR2Vec_classifier.py \
+python <default_model.py / ir2vec_O0_model.py / ir2vec_O0_model.py> \
   --test /path/to/test.csv \
   --model /path/to/saved_model.h5
 ```
 
 * `--test`: Path to testing data.
 * `--model`: Path to trained model file (.h5).
+
+## Inference with Pretrained IR2Vec Models
+
+This guide explains how to perform **testing/inference** using pretrained models trained on IR2Vec embeddings. The models are available under
+
+```
+/IR2Vec-Classification/models/trained_model/
+├── ir2vec-O0-model.h5
+└── ir2vec-O3-model.h5
+```
+
+#### Pre-requisites
+
+Ensure you have
+
+* A valid test CSV file with IR2Vec embeddings (tab-separated, label in the first column).
+* Created a conda environment and install dependencies using the provided env.yml file.
+* Cloned or downloaded this repository.
+
+#### Run inference with pretrained model
+
+```bash
+python main.py \
+    --test /path/to/test.csv \
+    --model /IR2Vec-Classification/models/trained_model/<ir2vec-O0-model.h5 / ir2vec-O3-model.h5>
+```
+
+Replace
+
+* `/path/to/testing.csv` with the actual test file path (tab-separated).
+* Use `ir2vec-O0-model.h5` if the embeddings were generated from .ll files compiled with O0 optimization, or `ir2vec-O3-model.h5` for embeddings from .ll files compiled with O3 optimization.
+
+#### Example
+
+```bash
+python main.py \
+    --test ./embeddings/test.csv \
+    --model ./models/trained_model/ir2vec-O0-model.h5
+```
 
 ## Model Variants
 
