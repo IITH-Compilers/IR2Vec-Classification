@@ -1,7 +1,7 @@
 # First run preprocess.py to split the data into training, testing and val if the splitted data is not present.
 
 # Usage Instructions
-# python default_model.py [options]
+# python ir2vec_O3_model.py [options]
 # --train: Path of the training data file
 # --test: Path of the testing data file
 # --val: Path of the validation data file
