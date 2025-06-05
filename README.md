@@ -158,13 +158,13 @@ This guide explains how to perform **testing/inference** using pretrained models
 Ensure you have
 
 * A valid test CSV file with IR2Vec embeddings (tab-separated, label in the first column).
-* Created a conda environment and install dependencies using the provided env.yml file.
+* Created a conda environment and install dependencies using the provided `env.yml` file.
 * Cloned or downloaded this repository.
 
 #### Run inference with pretrained model
 
 ```bash
-python main.py \
+python <ir2vec-O0-model.py / ir2vec-O3-model.py> \
     --test /path/to/test.csv \
     --model /IR2Vec-Classification/models/trained_model/<ir2vec-O0-model.h5 / ir2vec-O3-model.h5>
 ```
@@ -177,7 +177,7 @@ Replace
 #### Example
 
 ```bash
-python main.py \
+python ir2vec-O0-model.py \
     --test ./embeddings/test.csv \
     --model ./models/trained_model/ir2vec-O0-model.h5
 ```
