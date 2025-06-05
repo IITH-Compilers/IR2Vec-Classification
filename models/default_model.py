@@ -32,7 +32,6 @@ from sklearn.decomposition import IncrementalPCA
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-# Import TensorFlow Keras
 from tensorflow import keras
 from tensorflow.keras import optimizers
 from tensorflow.keras.layers import (Activation, Dense, Dropout, BatchNormalization)
@@ -74,8 +73,8 @@ def getModel(input_dim, output_dim):
 
     return model
 
-# Train the model on the  given data
-def train(x_train, y_train, x_test, y_test,x_val, y_val, options, model):
+# Train the model on the given data
+def train(x_train, y_train, x_test, y_test, x_val, y_val, options, model):
     X_min = x_train.min()
     X_max = x_train.max()
 
@@ -91,6 +90,7 @@ def train(x_train, y_train, x_test, y_test,x_val, y_val, options, model):
     print(f"\nBefore subtracting -1 from labels (y_train): {y_train}")
 
     y_train = y_train - 1
+
     print(f"After subtracting -1 from labels: {y_train}")
     print(f"After subtracting -1 from labels: {np.unique(y_train).shape[0]}")
 
@@ -160,14 +160,13 @@ def train(x_train, y_train, x_test, y_test,x_val, y_val, options, model):
         y_test = keras.utils.to_categorical(y_test, num_classes)
         x_test = ipca.transform(x_test)
         score = model.evaluate(x_test, y_test, verbose=0)
-        print('Test accuracy : {acc:.3f}%'.format(acc=score[1]*100))
+        print('Test accuracy (after training) : {acc:.3f}%'.format(acc=score[1]*100))
     
     with open('dictionary.pkl', 'wb') as f:
         pickle.dump(num_classes, f)
         pickle.dump(X_min, f)
         pickle.dump(X_max, f)
         pickle.dump(ipca, f)
-
 
 # Test the learnt model on the data
 def test(X, targetLabel, model):
@@ -185,18 +184,15 @@ def test(X, targetLabel, model):
     X = ipca.transform(X)
     
     score = model.evaluate(X, targetLabel, verbose=0)
-    print('Test accuracy : {acc:.3f}%'.format(acc=score[1]*100))
+    print('Test accuracy: {acc:.3f}%'.format(acc=score[1]*100))
 
-# Entry Point of the program
+# Entry point of the program
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
-    parser.add_argument('-tr', '--train', dest='train', metavar='FILE', help='Path Of the data/embedding file having training data', default=None)
-    parser.add_argument('-t', '--test', dest='test', metavar='FILE', help='Path Of the data/embedding file having testing data', default=None)
-    parser.add_argument('-v', '--val', dest='val', metavar='FILE', help='Path Of the data/embedding file having validation data', default=None)
+    parser.add_argument('-tr', '--train', dest='train', metavar='FILE', help='Path of the data/embedding file having training data', default=None)
+    parser.add_argument('-t', '--test', dest='test', metavar='FILE', help='Path of the data/embedding file having testing data', default=None)
+    parser.add_argument('-v', '--val', dest='val', metavar='FILE', help='Path of the data/embedding file having validation data', default=None)
     
-    
-    # parser.add_argument('-t', '--test', dest='test', action="store_true")
     parser.add_argument('-e', '--epochs', dest='epochs', required=False, type=int, help='Number of epoches', default=100)
     parser.add_argument('-bs', '--batch_size', dest='batch_size', required=False, type=int, help='Tune the batch size', default=32)
     parser.add_argument('-m', '--model', dest='model', metavar='FILE', help='Path of the file with learnt weights', required=False, default=None) 
@@ -212,8 +208,8 @@ if __name__ == '__main__':
 
     if args.test is not None:
         X_test = pd.read_csv(args.test, sep='\t', header=None)
-        y_test = X_test.loc[:,0]
-        X_test = X_test.loc[:,1:]
+        y_test = X_test.loc[:, 0]
+        X_test = X_test.loc[:, 1:]
         X_test.columns = range(X_test.shape[1])
         
         print("Test set: ")
@@ -222,8 +218,8 @@ if __name__ == '__main__':
 
     if args.train is not None:
         X = pd.read_csv(args.train, sep='\t', header=None)
-        Y = X.loc[:,0]
-        X = X.loc[:,1:]
+        Y = X.loc[:, 0]
+        X = X.loc[:, 1:]
         X.columns = range(X.shape[1])
         
         print("Train set: ")
@@ -232,17 +228,19 @@ if __name__ == '__main__':
         
         X_val = None
         y_val = None
+        
         if args.val is not None:
             X_val = pd.read_csv(args.val, sep='\t', header=None)
-            y_val = X_val.loc[:,0]
-            X_val = X_val.loc[:,1:]
+            y_val = X_val.loc[:, 0]
+            X_val = X_val.loc[:, 1:]
             X_val.columns = range(X_val.shape[1])
             
             print("Validation set: ")
             print(f"X_val shape: {X_val.shape}")
             print(f"y_val unique counts: \n{y_val.value_counts()}")
         
-        model = None 
+        model = None # No pre-trained model is being loaded
+
         if args.model is not None:
             print('============================ The trained weight to initialize the NN =========================================')
             model = keras.models.load_model(args.model)
